@@ -11,6 +11,7 @@ public class EventManager : MonoBehaviour
 
     public static EventManager instance
     {
+        // let instance be enventManager
         get
         {
             if (!eventManager)
@@ -31,6 +32,9 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initialize a dictionary if there is none
+    /// </summary>
     void Init()
     {
         if (eventDictionary == null)
@@ -38,7 +42,11 @@ public class EventManager : MonoBehaviour
             eventDictionary = new Dictionary<string, UnityEvent>();
         }
     }
-
+    /// <summary>
+    /// Add a listener to an existing unity event. Instantiates a new event if there is none.  
+    /// </summary>
+    /// <param name="eventName"></param>
+    /// <param name="listener"></param>
     public static void StartListening(string eventName, UnityAction listener)
     {
         UnityEvent thisEvent = null;
@@ -54,16 +62,28 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes a listener from an existing event
+    /// </summary>
+    /// <param name="eventName"></param>
+    /// <param name="listener"></param>
     public static void StopListening(string eventName, UnityAction listener)
     {
-        if (eventManager == null) return;
+        if (eventManager == null)
+            return;
+
         UnityEvent thisEvent = null;
+
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
     }
 
+    /// <summary>
+    /// Triggers an event if it exists
+    /// </summary>
+    /// <param name="eventName"></param>
     public static void TriggerEvent(string eventName)
     {
         UnityEvent thisEvent = null;
