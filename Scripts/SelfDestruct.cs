@@ -43,12 +43,12 @@ public class SelfDestruct : MonoBehaviour
         {
             transform.Translate (Random.Range(-shake, shake), 0f, Random.Range(-shake, shake));
             transform.Rotate (0f, Random.Range(-shake * 100, shake * 100), 0f);
-            startTime -= Time.deltaTime;
+            startTime += Time.deltaTime;
             yield return null;
         }
 
         Instantiate(explosion, transform.position, transform.rotation);
 
-        yield return null;
+        Destroy(gameObject);
     }
 }
